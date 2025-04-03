@@ -1,0 +1,40 @@
+  <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="AvaloniaApplication.Views.MainWindow"
+        xmlns:vm="using:AvaloniaApplication.ViewModels"
+        xmlns:models="using:AvaloniaApplication.Models"
+        Title="Dictionary App" Width="400" Height="300">
+
+  <Window.DataContext>
+    <vm:MainViewModel />
+  </Window.DataContext>
+
+  <StackPanel Margin="10" x:DataType="vm:MainViewModel">
+    <TextBlock Text="Key:"/>
+    <TextBox Text="{Binding KeyInput}"/>
+
+    <TextBlock Text="Value:"/>
+    <TextBox Text="{Binding ValueInput}"/>
+
+    <Button Content="Add" Command="{Binding AddCommand}"/>
+    <Button Content="Remove" Command="{Binding RemoveCommand}"/>
+    <Button Content="Clear" Command="{Binding ClearCommand}"/>
+
+    <ListBox ItemsSource="{Binding DictionaryItems}">
+      <ListBox.ItemTemplate>
+        <DataTemplate x:DataType="models:DictionaryItem">
+          <TextBlock>
+            <TextBlock.Text>
+              <MultiBinding StringFormat="Key: {0} - Value: {1}">
+                <Binding Path="Key"/>
+                <Binding Path="Value"/>
+              </MultiBinding>
+            </TextBlock.Text>
+          </TextBlock>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <TextBlock Text="{Binding Messages}" Foreground="Red"/>
+  </StackPanel>
+</Window>
